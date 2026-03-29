@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -11,6 +12,19 @@ namespace IkhsanovAPI.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Genres",
+                columns: table => new
+                {
+                    genreId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    genreName = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Genres", x => x.genreId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
@@ -25,6 +39,29 @@ namespace IkhsanovAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Movies",
+                columns: table => new
+                {
+                    movieId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    title = table.Column<string>(type: "text", nullable: false),
+                    description = table.Column<string>(type: "text", nullable: false),
+                    releaseDate = table.Column<DateOnly>(type: "date", nullable: false),
+                    genreId = table.Column<int>(type: "integer", nullable: false),
+                    rate = table.Column<float>(type: "real", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Movies", x => x.movieId);
+                    table.ForeignKey(
+                        name: "FK_Movies_Genres_genreId",
+                        column: x => x.genreId,
+                        principalTable: "Genres",
+                        principalColumn: "genreId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -32,6 +69,7 @@ namespace IkhsanovAPI.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     fullname = table.Column<string>(type: "text", nullable: false),
                     description = table.Column<string>(type: "text", nullable: false),
+                    email = table.Column<string>(type: "text", nullable: false),
                     roleId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -92,6 +130,11 @@ namespace IkhsanovAPI.Migrations
                 column: "userId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Movies_genreId",
+                table: "Movies",
+                column: "genreId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Sessions_userId",
                 table: "Sessions",
                 column: "userId");
@@ -109,7 +152,13 @@ namespace IkhsanovAPI.Migrations
                 name: "Logins");
 
             migrationBuilder.DropTable(
+                name: "Movies");
+
+            migrationBuilder.DropTable(
                 name: "Sessions");
+
+            migrationBuilder.DropTable(
+                name: "Genres");
 
             migrationBuilder.DropTable(
                 name: "Users");

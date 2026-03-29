@@ -9,4 +9,9 @@ public interface IAdminService
     Task<IActionResult> CreateNewUserAndLoginAsync([FromHeader] string authorization, QueryUsers newUser);
     Task<IActionResult> UpdateUserAndLoginAsync([FromHeader] string authorization, QueryUsers updateUser);
     Task<IActionResult> DeleteUserAndLoginAsync([FromHeader] string authorization, int userId);
+    
+    Task<IActionResult> GetAllMovies([FromHeader] string authorization);
+    Task<IActionResult> AddNewMovie([FromHeader] string authorization, MovieRequest newMovie);
+    Task<IActionResult> UpdateMovie([FromHeader] string authorization, MovieRequest updateMovie);
+    Task<IActionResult> DeleteMovie([FromHeader] string authorization, int movieIdd);
 }

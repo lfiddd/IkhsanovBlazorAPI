@@ -140,4 +140,104 @@ public class AdminService : IAdminService
             message = "Вы успешно удалили пользователя"
         });
     }
+
+    public async Task<IActionResult> GetAllMovies(string authorization)
+    {
+        var tempSession = authorization.Split(' ').Last();
+    
+        var session = await _context.Sessions
+            .Include(s => s.User)
+            .FirstOrDefaultAsync(s => s.token == tempSession);
+    
+        var moviesList = await _context.Movies.ToListAsync();
+        
+        return new OkObjectResult(new {data = moviesList, status = true, message = "Movies list successfully retrieved" });
+    }
+
+
+    public async Task<IActionResult> AddNewMovie(string authorization, MovieRequest newMovie)
+    {
+        var tempSession = authorization.Split(' ').Last();
+    
+        var session = await _context.Sessions
+            .Include(s => s.User)
+            .FirstOrDefaultAsync(s => s.token == tempSession);
+
+        var createdMovie = new Movie()
+        {
+            title = newMovie.title,
+            description = newMovie.description,
+            releaseDate = newMovie.releaseDate,
+            rate =  newMovie.rate,
+            genreId = newMovie.genreId,
+            imageUrl = newMovie.imageUrl
+        };
+        
+        await _context.Movies.AddAsync(createdMovie);
+        await _context.SaveChangesAsync();
+
+        return new OkObjectResult(new
+            {
+                status = true,
+                message = "Movie created successfully."
+            }
+        );
+    }
+
+    public async Task<IActionResult> UpdateMovie(string authorization, MovieRequest updateMovie)
+    {
+        var tempSession = authorization.Split(' ').Last();
+        var thisUser = await _context.Sessions.Include(s => s.User).FirstOrDefaultAsync(s => s.token == tempSession);
+
+        var thisMovie = await _context.Movies.FirstOrDefaultAsync(s => s.movieId == updateMovie.movieId);
+        if (thisMovie == null)
+        {
+            return new NotFoundObjectResult(new
+                {
+                    status = false,
+                    message = "Movie not found"
+                }
+            );
+        }
+        
+        
+        thisMovie.title = updateMovie.title;
+        thisMovie.description = updateMovie.description;
+        thisMovie.releaseDate = updateMovie.releaseDate;
+        thisMovie.rate = updateMovie.rate;
+        thisMovie.genreId = updateMovie.genreId;
+        thisMovie.imageUrl = updateMovie.imageUrl;
+        
+        await _context.SaveChangesAsync();
+        return new OkObjectResult(new
+            {
+                status = true,
+                message = "Movie updated successfully."
+            }
+        );
+    }
+
+    public async Task<IActionResult> DeleteMovie(string authorization, int movieIdd)
+    {
+        var tempSession = authorization.Split(' ').Last();
+        var usersList = await _context.Sessions.Include(s => s.User).FirstOrDefaultAsync(s => s.token == tempSession);
+
+
+        var thisMovie = await _context.Movies.FirstOrDefaultAsync(s => s.movieId == movieIdd);
+
+        if (thisMovie == null)
+        {
+            return new NotFoundObjectResult(new {status = false, message = "Movie not found"});
+        }
+        
+        _context.Movies.Remove(thisMovie);
+        await _context.SaveChangesAsync();
+
+        return new OkObjectResult(new
+            {
+                status = true,
+                message = "Movie deleted successfully."
+            }
+        );
+    }
 }

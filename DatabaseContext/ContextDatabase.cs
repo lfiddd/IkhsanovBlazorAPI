@@ -14,4 +14,6 @@ public class ContextDatabase : DbContext
     public DbSet<Login> Logins { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Session> Sessions { get; set; }
+    public DbSet<Genre> Genres { get; set; }
+    public DbSet<Movie> Movies { get; set; }
 }

@@ -272,3 +272,4 @@ C:\Users\bulat\Documents\КТИТС\Учебка 2025\Uchebka2025_Ikhsanov\Ikhsa
 C:\Users\bulat\Documents\КТИТС\Учебка 2025\Uchebka2025_Ikhsanov\IkhsanovAPI\IkhsanovAPI\obj\Debug\net9.0\IkhsanovAPI.pdb
 C:\Users\bulat\Documents\КТИТС\Учебка 2025\Uchebka2025_Ikhsanov\IkhsanovAPI\IkhsanovAPI\obj\Debug\net9.0\IkhsanovAPI.genruntimeconfig.cache
 C:\Users\bulat\Documents\КТИТС\Учебка 2025\Uchebka2025_Ikhsanov\IkhsanovAPI\IkhsanovAPI\obj\Debug\net9.0\ref\IkhsanovAPI.dll
+C:\Users\bulat\Documents\КТИТС\Учебка 2025\Uchebka2025_Ikhsanov\IkhsanovAPI\IkhsanovAPI\obj\Debug\net9.0\IkhsanovAPI.sourcelink.json

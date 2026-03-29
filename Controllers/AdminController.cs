@@ -23,5 +23,15 @@ public class AdminController
     [HttpPost("DeleteUser")]
     public async Task<IActionResult> DeleteUser([FromHeader] string authorization,[FromQuery] int userId) => await _adminService.DeleteUserAndLoginAsync(authorization, userId);
 
+    [HttpGet("GetAllMovies")]
+    public async Task<IActionResult> GetAllMovies([FromHeader] string authorization) => await _adminService.GetAllMovies(authorization);
+    
+    [HttpPost("AddNewMovie")]
+    public async Task<IActionResult> AddNewMovie([FromHeader] string authorization, MovieRequest newMovie) => await _adminService.AddNewMovie(authorization, newMovie);
+    
+    [HttpPost("UpdateMovie")]
+    public async Task<IActionResult> UpdateMovie([FromHeader] string authorization,MovieRequest updateMovie) => await _adminService.UpdateMovie(authorization, updateMovie);
 
+    [HttpPost("DeleteMovie")]
+    public async Task<IActionResult> DeleteMovie([FromHeader] string authorization,[FromQuery] int movieIdd) => await _adminService.DeleteMovie(authorization, movieIdd);
 }

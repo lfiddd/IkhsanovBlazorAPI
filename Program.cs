@@ -49,6 +49,8 @@ app.UseCors("AllowBlazorWasm");
 
 app.UseHttpsRedirection();
 
+app.MapGet("/", () => Results.Redirect("/swagger"));
+
 app.UseAuthorization();
 
 app.MapControllers();

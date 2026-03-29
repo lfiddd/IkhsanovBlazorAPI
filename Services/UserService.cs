@@ -60,6 +60,74 @@ public class UserService : IUserService
             }
         });
     }
+
+    public async Task<IActionResult> GetAllMovies(string authorization)
+    {
+        var tempSession = authorization.Split(' ').Last();
+    
+        var session = await _context.Sessions
+            .Include(s => s.User)
+            .FirstOrDefaultAsync(s => s.token == tempSession);
+    
+        if (session == null)
+        {
+            return new UnauthorizedObjectResult(new 
+            { 
+                status = false, 
+                message = "Сессия не найдена" 
+            });
+        }   
+        
+        var moviesList = await _context.Movies.ToListAsync();
+        
+        return new OkObjectResult(new {data = moviesList, status = true, message = "Movies list successfully retrieved" });
+    }
+
+
+    public async Task<IActionResult> GetMovieFromID(string authorization, int movieIdd)
+    {
+        var tempSession = authorization.Split(' ').Last();
+    
+        var session = await _context.Sessions
+            .Include(s => s.User)
+            .FirstOrDefaultAsync(s => s.token == tempSession);
+    
+        if (session == null)
+        {
+            return new UnauthorizedObjectResult(new 
+            { 
+                status = false, 
+                message = "Сессия не найдена" 
+            });
+        }
+
+        var movie = await _context.Movies.FirstOrDefaultAsync(s => s.movieId == movieIdd);
+
+        if (movie == null)
+        {
+            return new NotFoundObjectResult(new
+            {
+                status = false,
+                message = "Movie not founded"
+            });
+        }
+
+        return new OkObjectResult(new
+            {
+                status = true,
+                data = new
+                {
+                    title = movie.title,
+                    description = movie.description,
+                    releaseDate = movie.releaseDate,
+                    rate = movie.rate,
+                    genre = movie.Genre.genreName,
+                    image = movie.imageUrl,
+                },
+                message = "Movie succsesfully retrieved"
+            }
+        );
+    }
     
     
 }

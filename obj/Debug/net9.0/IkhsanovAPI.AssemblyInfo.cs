@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IkhsanovAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e030e3a40d4756fae44200a601297f714ba16a1f")]
 [assembly: System.Reflection.AssemblyProductAttribute("IkhsanovAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IkhsanovAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

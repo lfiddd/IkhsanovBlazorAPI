@@ -11,8 +11,8 @@ namespace IkhsanovAPI.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "email",
-                table: "Users",
+                name: "imageUrl",
+                table: "Movies",
                 type: "text",
                 nullable: false,
                 defaultValue: "");
@@ -22,8 +22,8 @@ namespace IkhsanovAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "email",
-                table: "Users");
+                name: "imageUrl",
+                table: "Movies");
         }
     }
 }
